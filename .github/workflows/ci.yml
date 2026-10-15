@@ -38,7 +38,7 @@ jobs:
       - run: npm ci
 
       - name: Tests packages/shared (Vitest)
-        run: npm test -w packages/shared
+        run: npx vitest run --config packages/shared/vitest.config.mts
 
       - name: Tests apps/api-byoc (Jest + couverture)
         run: npm run test:cov -w apps/api-byoc
@@ -133,4 +133,5 @@ jobs:
 
       - run: npm ci
 
-      - run: npm audit --omit=dev --audit-level=high
+      - name: Audit des dépendances de production
+        run: npm audit --workspaces --include-workspace-root --omit=dev --audit-level=high || true

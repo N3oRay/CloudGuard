@@ -26,7 +26,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Aucune image n'est publiée si les tests / builds / contrôles de ci.yml
+  # échouent (ci.yml est appelé ici en tant que workflow réutilisable).
+  ci:
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
   build-and-push:
+    needs: ci
     runs-on: ubuntu-latest
     permissions:
       contents: read
